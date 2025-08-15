@@ -42,21 +42,21 @@ int main(){
 	        char nos[TFL][TFN];
 	        int tl=lerMA(mat,nos);
 	        exibeMA(mat,nos,tl);
-	        if(verificaSimplesAdjacencia(mat,tl))
+	        if(verificaSimplesAdjacenciaMI(mat,tl))
 	            printf("\nÉ simples\n");
 	        else
 	            printf("\nNão é simples\n");
-	        int reg=verificaRegularAdjacencia(mat,tl);
+	        int reg=verificaRegularAdjacenciaMI(mat,tl);
 	        if(reg)
 	            printf("\nÉ regular %d\n",reg);
 	        else
 	            printf("\nNão é regular\n");
 
-	        if(verificaOrientadoAdjacencia(mat,tl))
+	        if(verificaOrientadoAdjacenciaMI(mat,tl))
 	            printf("\nÉ orientado\n");
 	        else {
 	            printf("\nNão é orientado\n");
-	            if(verificaCompletoAdjacencia(mat,tl))
+	            if(verificaCompletoAdjacenciaMI(mat,tl))
 	                printf("\nÉ completo => K%d\n",tl);
 	            else
 	                printf("\nNão é completo\n");
