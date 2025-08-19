@@ -4,17 +4,19 @@ char verificaSimplesAdjacencia(int mat[TFL][TFC], int tl){
     return i==tl;
 }
 
-char verificaRegularAdjacencia(int mat[TFL][TFC], int tl){
-    int i,j,soma=0,aux;
+int verificaRegularAdjacencia(int mat[TFL][TFC], int tl){
+    int i,j,cont=0,aux;
     for(j=0;j<tl;j++)
-        soma+=mat[0][j];
-    aux=soma;
-    for(i=1;i<tl && aux==soma;i++){
+        if (mat[0][j]!=0)
+            cont++;
+    aux=cont;
+    for(i=1;i<tl && aux==cont;i++){
         aux=0;
         for(j=0;j<tl;j++)
-            aux+=mat[i][j];
+            if (mat[i][j]!=0)
+                cont++;
     }
-    return aux==soma ? soma : 0;
+    return aux==cont ? cont : 0;
 }
 
 char verificaOrientadoAdjacencia(int mat[TFL][TFC], int tl){
@@ -62,7 +64,7 @@ int lerMA(int mat[TFL][TFC],char nos[TFL][TFN]){
         fgets(linha,TFL*TFL,ponteiro);
         if(!feof(ponteiro)){
             for(tl=0,i=0,j=0;i<strlen(linha);i++){
-                if(linha[i]==',' ||linha[i]=='\n'){
+                if(linha[i]==' ' ||linha[i]=='\n'){
                     carac[j]='\0';
                     strcpy(nos[tl],carac);
                     tl++;
@@ -79,7 +81,7 @@ int lerMA(int mat[TFL][TFC],char nos[TFL][TFN]){
         while(!feof(ponteiro)){
             c=0;
             for(i=0,j=0;i<strlen(linha);i++){
-                if(linha[i]==',' ||linha[i]=='\n'){
+                if(linha[i]==' ' ||linha[i]=='\n'){
                     carac[j]='\0';
                     mat[l][c]=atoi(carac);
                     j=0;

@@ -7,56 +7,71 @@
 #define TFN 20
 
 #include"MA.h"
+#include"MI.h"
 
 int main(){
-	char op=1;
+	char op=2;
+    int mi[TFL][TFC*TFC],ma[TFL][TFC],tl,reg;
+    char nos[TFL][TFN];
+    char arestas[TFC*TFC][TFN];
 	// char op=menu();
 	switch(op){
 		case 1: //Matriz MA
-			int mat[TFL][TFC];
-			char nos[TFL][TFN];
-			int tl=lerMA(mat,nos);
-			exibeMA(mat,nos,tl);
-			if(verificaSimplesAdjacencia(mat,tl))
+
+			tl=lerMA(ma,nos);
+			exibeMA(ma,nos,tl);
+			if(verificaSimplesAdjacencia(ma,tl))
 			    printf("\nÉ simples\n");
 	        else
 	            printf("\nNão é simples\n");
-	        int reg=verificaRegularAdjacencia(mat,tl);
+	        reg=verificaRegularAdjacencia(ma,tl);
 			if(reg)
 			    printf("\nÉ regular %d\n",reg);
 	        else
 	            printf("\nNão é regular\n");
 
-	        if(verificaOrientadoAdjacencia(mat,tl))
+	        if(verificaOrientadoAdjacencia(ma,tl))
 			    printf("\nÉ orientado\n");
 	        else {
                 printf("\nNão é orientado\n");
-	            if(verificaCompletoAdjacencia(mat,tl))
+	            if(verificaCompletoAdjacencia(ma,tl))
 	                printf("\nÉ completo => K%d\n",tl);
 	            else
 	                printf("\nNão é completo\n");
             }
 			break;
 	    case 2: //Matriz Mi
-	        int mat[TFL][TFC];
-	        char nos[TFL][TFN];
-	        int tl=lerMA(mat,nos);
-	        exibeMA(mat,nos,tl);
-	        if(verificaSimplesAdjacenciaMI(mat,tl))
+
+	        int tll,tlc;
+	        lerMI(mi,nos,arestas,tll,tlc);
+	        exibeMI(mi,nos,arestas,tll,tlc);
+	        if(verificaSimplesMI(mi,tll,tlc))
 	            printf("\nÉ simples\n");
 	        else
 	            printf("\nNão é simples\n");
-	        int reg=verificaRegularAdjacenciaMI(mat,tl);
-	        if(reg)
-	            printf("\nÉ regular %d\n",reg);
-	        else
-	            printf("\nNão é regular\n");
 
-	        if(verificaOrientadoAdjacenciaMI(mat,tl))
-	            printf("\nÉ orientado\n");
-	        else {
+
+	        if(verificaOrientadoMI(mi,tll,tlc)) {
+                printf("\nÉ orientado\n");
+	            int reg=verificaRegularMI(mi,tl,tlc,0);
+	            if(reg) {
+
+                    printf("\nÉ regular chegada %d\n",reg);
+	                reg=verificaRegularMI(mi,tl,tlc,0);
+	                if(reg)
+	                    printf("É regular de saida %d\n",reg);
+                }
+                else {
+                    reg=verificaRegularMI(mi,tl,tlc,0);
+                    if(reg)
+                        printf("É regular de saida%d\n",reg);
+	                else
+	                    printf("\nNão é regular\n");
+                }
+            }
+            else {
 	            printf("\nNão é orientado\n");
-	            if(verificaCompletoAdjacenciaMI(mat,tl))
+	            if(verificaCompletoMI(mi,tll,tlc))
 	                printf("\nÉ completo => K%d\n",tl);
 	            else
 	                printf("\nNão é completo\n");
