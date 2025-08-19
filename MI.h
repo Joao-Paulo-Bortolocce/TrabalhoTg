@@ -76,32 +76,42 @@ char verificaOrientadoMI(int mat[TFL][TFC*TFC], int tll, int tlc) {
 }
 
 char verificaCompletoMI(int mat[TFL][TFC*TFC], int tll, int tlc) {
-    int l,c=0,i=tll;
-    for (l=0;l<tll-1 && i==tll;l++) {
-        for (i=l+1;i<tll && c<tlc;i++) {
-            for (c=0;c<tlc && (mat[l][c]==0 || mat[i][c]==0);c++);
+    int l,c=0,cont=tlc-1;
+    for(l=0;l<tll && cont==tlc-1;l++){
+        for(c=0,cont=0;c<tlc;c++){
+            if(mat[l][c]!=0)
+                cont++;
         }
     }
-    return i==tll;
+    return cont==tlc-1;
 }
 
 void exibeMI(int mat[TFL][TFC*TFC],char nos[TFL][TFN],char arestas[TFC*TFC][TFN], int tll, int tlc){
     int i,j;
-    printf("\t");
-    for(i=0;i<tlc;i++)
-        printf("%s\t",arestas[i]);
+    int lin, col, lin2, col2;
+	lin = 8, col = 17;
+    for(i=0;i<tlc;i++, col += 6){
+    	gotoxy(col,lin);
+    	printf("%s",arestas[i]);
+    }     
     printf("\n");
-    for(i=0;i<tll;i++)
+    lin = 9, col = 17;
+    lin2 = 9, col2 = 12;
+    for(i=0;i<tll;i++, lin2++)
     {
-        printf("%s\t",nos[i]);
-        for(j=0;j<tlc;j++)
-            printf("%d\t",mat[i][j]);
-        printf("\n");
+    	gotoxy(col2,lin2);
+        printf("%s",nos[i]);
+        for(j=0;j<tlc;j++, col += 6){
+        	gotoxy(col,lin);
+        	printf("%d",mat[i][j]);
+        }
+        lin++; col = 17;
     }
+    printf("\n");
 }
 
 void lerMI(int mat[TFL][TFC*TFC],char nos[TFL][TFN], char arestas[TFC*TFC][TFN], int &tll, int &tlc){
-    FILE*ponteiro=fopen("matriz.txt","r");
+    FILE*ponteiro=fopen("mi.txt","r");
     char carac[TFN],linha[TFL*TFL];
     int i,j,l,c;
     if(ponteiro!=NULL){

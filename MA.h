@@ -41,23 +41,31 @@ char verificaCompletoAdjacencia(int mat[TFL][TFC], int tl){
 
 void exibeMA(int mat[TFL][TFC],char nos[TFL][TFN], int tl){
     int i,j;
-    printf("\t");
-    for(i=0;i<tl;i++)
-        printf("%s\t",nos[i]);
-    printf("\n");
-    for(i=0;i<tl;i++)
-    {
-        printf("%s\t",nos[i]);
-        for(j=0;j<tl;j++)
-            printf("%d\t",mat[i][j]);
-        printf("\n");
+    int lin, col, lin2, col2;
+	lin = 8, col = 17;
+    for(i=0;i<tl;i++, col += 8){
+    	gotoxy(col,lin); printf("%s",nos[i]);
     }
+    printf("\n");
+    lin = 9, col = 17;
+    lin2 = 9, col2 = 12;
+    for(i=0;i<tl;i++, lin2++)
+    {
+        gotoxy(col2,lin2);
+        printf("%s",nos[i]);
+        for(j=0;j<tl;j++, col += 8){
+            gotoxy(col,lin);
+            printf("%d",mat[i][j]);
+        }
+        lin++; col = 17;
+    }
+    printf("\n");
 }
 
 
 int lerMA(int mat[TFL][TFC],char nos[TFL][TFN]){
     int tl;
-    FILE*ponteiro=fopen("matriz.txt","r");
+    FILE*ponteiro=fopen("ma.txt","r");
     char carac[TFN],cara,linha[TFL*TFL];
     int i,j,l,c;
     if(ponteiro!=NULL){

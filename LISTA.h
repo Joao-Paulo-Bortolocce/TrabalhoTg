@@ -100,9 +100,9 @@ int verificaRegularLista(TpLista *lista[TFL],char nos[TFL][TFN], int tl, char or
 }
 
 char verificaCompletoLista(TpLista *lista[TFL], int tl) {
-    int i,cont=tl;
+    int i,cont=tl-1;
     TpLista *aux;
-    for (i=0;i<tl && cont==tl;i++) {
+    for (i=0;i<tl && cont==tl-1;i++) {
         aux=lista[i];
         cont=0;
         while (aux!=NULL) {
@@ -110,7 +110,7 @@ char verificaCompletoLista(TpLista *lista[TFL], int tl) {
             aux=aux->prox;
         }
     }
-    return cont==tl;
+    return cont==tl-1;
 }
 
 void inserir(TpLista *listas[TFL], int i, char rotulo[TFN], int peso) {

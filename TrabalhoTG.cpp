@@ -1,82 +1,134 @@
-#include<stdio.h>
-#include<string.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <conio2.h>
+#include <ctype.h>
 
 #define TFL 10
 #define TFC 10
 #define TFN 20
 
-#include"MA.h"
-#include"MI.h"
+#include "MA.h"
+#include "MI.h"
+#include"LISTA.h"
+#include "Molduras.h"
 
-int main(){
-	char op=2;
-    int mi[TFL][TFC*TFC],ma[TFL][TFC],tl,reg;
-    char nos[TFL][TFN];
-    char arestas[TFC*TFC][TFN];
-	// char op=menu();
-	switch(op){
-		case 1: //Matriz MA
+void Executar()
+{
+	char op, flagSimples, flagOrientado;
+	int mi[TFL][TFC * TFC], ma[TFL][TFC], tl, reg;
+	char nos[TFL][TFN];
+	char arestas[TFC * TFC][TFN];
+	do
+	{
+		op = Quadro();
+		switch (op)
+		{
+		case 'A':
+			QuadroInfo();
+			textbackground(14);
+			textcolor(0);
+			gotoxy(18, 5);
+			printf("MATRIZ DE ADJACENCIA");
 
-			tl=lerMA(ma,nos);
-			exibeMA(ma,nos,tl);
-			if(verificaSimplesAdjacencia(ma,tl))
-			    printf("\nÉ simples\n");
-	        else
-	            printf("\nNão é simples\n");
-	        reg=verificaRegularAdjacencia(ma,tl);
-			if(reg)
-			    printf("\nÉ regular %d\n",reg);
-	        else
-	            printf("\nNão é regular\n");
+			textbackground(14);
+			textcolor(0);
 
-	        if(verificaOrientadoAdjacencia(ma,tl))
-			    printf("\nÉ orientado\n");
-	        else {
-                printf("\nNão é orientado\n");
-	            if(verificaCompletoAdjacencia(ma,tl))
-	                printf("\nÉ completo => K%d\n",tl);
-	            else
-	                printf("\nNão é completo\n");
-            }
+			tl = lerMA(ma, nos);
+			exibeMA(ma, nos, tl);
+			flagSimples = verificaSimplesAdjacencia(ma, tl) if (flagSimples)
+				printf("\n\tE simples\n");
+			else printf("\n\tNao e simples\n");
+			reg = verificaRegularAdjacencia(ma, tl);
+			if (reg)
+				printf("\n\tE regular %d\n", reg);
+			else
+				printf("\n\tNao e regular\n");
+
+			flagOrientado = verificaOrientadoAdjacencia(ma, tl) if (flagOrientado)
+				printf("\n\tE orientado\n");
+			else
+			{
+				printf("\n\tNao e orientado\n");
+			}
+			if (flagSimples && flagOrientado && verificaCompletoAdjacencia(ma, tl))
+				printf("\n\tE completo => K%d\n", tl);
+			else
+				printf("\n\tNao e completo\n");
+
+			getch();
 			break;
-	    case 2: //Matriz Mi
+		case 'I':
+			QuadroInfo();
+			textbackground(14);
+			textcolor(0);
+			gotoxy(18, 5);
+			printf("MATRIZ DE INCIDENCIA");
 
-	        int tll,tlc;
-	        lerMI(mi,nos,arestas,tll,tlc);
-	        exibeMI(mi,nos,arestas,tll,tlc);
-	        if(verificaSimplesMI(mi,tll,tlc))
-	            printf("\nÉ simples\n");
-	        else
-	            printf("\nNão é simples\n");
+			textbackground(14);
+			textcolor(0);
 
+			int tll, tlc;
+			lerMI(mi, nos, arestas, tll, tlc);
+			exibeMI(mi, nos, arestas, tll, tlc);
+			flagSimples=verificaSimplesMI(mi, tll, tlc);
+			if (flagSimples)
+				printf("\n\tE simples\n");
+			else
+				printf("\n\tNao e simples\n");
 
-	        if(verificaOrientadoMI(mi,tll,tlc)) {
-                printf("\nÉ orientado\n");
-	            int reg=verificaRegularMI(mi,tl,tlc,0);
-	            if(reg) {
+			flagOrientado=verificaOrientadoMI(mi, tll, tlc);
+			if (flagOrientado)
+			{
+				printf("\n\tE orientado\n");
+				int reg = verificaRegularMI(mi, tl, tlc, 0);
+				if (reg)
+				{
 
-                    printf("\nÉ regular chegada %d\n",reg);
-	                reg=verificaRegularMI(mi,tl,tlc,0);
-	                if(reg)
-	                    printf("É regular de saida %d\n",reg);
-                }
-                else {
-                    reg=verificaRegularMI(mi,tl,tlc,0);
-                    if(reg)
-                        printf("É regular de saida%d\n",reg);
-	                else
-	                    printf("\nNão é regular\n");
-                }
-            }
-            else {
-	            printf("\nNão é orientado\n");
-	            if(verificaCompletoMI(mi,tll,tlc))
-	                printf("\nÉ completo => K%d\n",tl);
-	            else
-	                printf("\nNão é completo\n");
-	        }
-	        break;
+					printf("\n\tE regular chegada %d\n", reg);
+					reg = verificaRegularMI(mi, tl, tlc, 0);
+					if (reg)
+						printf("\n\tE regular de saida %d\n", reg);
+				}
+				else
+				{
+					reg = verificaRegularMI(mi, tl, tlc, 0);
+					if (reg)
+						printf("\n\tE regular de saida%d\n", reg);
+					else
+						printf("\n\tNao e regular\n");
+				}
+			}
+			else
+			{
+				printf("\nNao e orientado\n");
+			}
+			if (flagOrientado && flagSimples && verificaCompletoMI(mi, tll, tlc))
+				printf("\nE completo => K%d\n", tl);
+			else
+				printf("\nNao e completo\n");
 
-	}
+			getch();
+			break;
+		case 'L':
+			QuadroInfo();
+			textbackground(14);
+			textcolor(0);
+			gotoxy(26, 5);
+			printf("LISTA");
+			getch();
+			break;
+		}
+	} while (op != 27);
+}
+
+int main()
+{
+
+	char op = 2;
+	int mi[TFL][TFC * TFC], ma[TFL][TFC], tl, reg;
+	char nos[TFL][TFN];
+	char arestas[TFC * TFC][TFN];
+	Executar();
+	return 0;
 }
