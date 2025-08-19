@@ -24,7 +24,7 @@ char verificaOrientadoAdjacencia(int mat[TFL][TFC], int tl){
     char flag=0;
     for(i=0;i<tl-1 && !flag;i++)
         for(j=i+1;j<tl && !flag;j++)
-            if(mat[i][j]!=mat[j][i])
+            if(mat[i][j]==0 || mat[j][i]==0)
                 flag=1;
     return flag;
 }
@@ -89,7 +89,7 @@ int lerMA(int mat[TFL][TFC],char nos[TFL][TFN]){
         while(!feof(ponteiro)){
             c=0;
             for(i=0,j=0;i<strlen(linha);i++){
-                if(linha[i]==' ' ||linha[i]=='\n'){
+                if(linha[i]==' ' || linha[i]=='\n' || linha[i]=='\0'){
                     carac[j]='\0';
                     mat[l][c]=atoi(carac);
                     j=0;

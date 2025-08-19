@@ -36,7 +36,8 @@ void Executar()
 
 			tl = lerMA(ma, nos);
 			exibeMA(ma, nos, tl);
-			flagSimples = verificaSimplesAdjacencia(ma, tl) if (flagSimples)
+			flagSimples = verificaSimplesAdjacencia(ma, tl);
+			if (flagSimples)
 				printf("\n\tE simples\n");
 			else printf("\n\tNao e simples\n");
 			reg = verificaRegularAdjacencia(ma, tl);
@@ -45,13 +46,14 @@ void Executar()
 			else
 				printf("\n\tNao e regular\n");
 
-			flagOrientado = verificaOrientadoAdjacencia(ma, tl) if (flagOrientado)
+			flagOrientado = verificaOrientadoAdjacencia(ma, tl) ;
+			if (flagOrientado)
 				printf("\n\tE orientado\n");
 			else
 			{
 				printf("\n\tNao e orientado\n");
 			}
-			if (flagSimples && flagOrientado && verificaCompletoAdjacencia(ma, tl))
+			if (flagSimples && !flagOrientado && reg && verificaCompletoAdjacencia(ma, tl))
 				printf("\n\tE completo => K%d\n", tl);
 			else
 				printf("\n\tNao e completo\n");
@@ -69,7 +71,7 @@ void Executar()
 			textcolor(0);
 
 			int tll, tlc;
-			lerMI(mi, nos, arestas, tll, tlc);
+	 		lerMI(mi, nos, arestas, tll, tlc);
 			exibeMI(mi, nos, arestas, tll, tlc);
 			flagSimples=verificaSimplesMI(mi, tll, tlc);
 			if (flagSimples)
@@ -86,13 +88,13 @@ void Executar()
 				{
 
 					printf("\n\tE regular chegada %d\n", reg);
-					reg = verificaRegularMI(mi, tl, tlc, 0);
+					reg = verificaRegularMI(mi, tl, tlc, 1);
 					if (reg)
 						printf("\n\tE regular de saida %d\n", reg);
 				}
 				else
 				{
-					reg = verificaRegularMI(mi, tl, tlc, 0);
+					reg = verificaRegularMI(mi, tl, tlc, 1);
 					if (reg)
 						printf("\n\tE regular de saida%d\n", reg);
 					else
@@ -101,9 +103,14 @@ void Executar()
 			}
 			else
 			{
+				reg = verificaRegularMI(mi, tl, tlc,0);
+				if (reg)
+					printf("\n\tE regular %d\n", reg);
+				else
+					printf("\n\tNao e regular\n");
 				printf("\nNao e orientado\n");
 			}
-			if (flagOrientado && flagSimples && verificaCompletoMI(mi, tll, tlc))
+			if (!flagOrientado && flagSimples && reg && verificaCompletoMI(mi, tll, tlc))
 				printf("\nE completo => K%d\n", tl);
 			else
 				printf("\nNao e completo\n");
@@ -116,6 +123,52 @@ void Executar()
 			textcolor(0);
 			gotoxy(26, 5);
 			printf("LISTA");
+			TpLista *listas[TFL];
+			tl=lerLista(listas,nos);
+			exibeLista(listas,nos,tl);
+			
+			flagSimples=verificaSimplesLista(listas, nos, tl);
+			if (flagSimples)
+				printf("\n\tE simples\n");
+			else
+				printf("\n\tNao e simples\n");
+
+			flagOrientado=verificaOrientadoLista(listas,nos,tl);
+			if (flagOrientado)
+			{
+				printf("\n\tE orientado\n");
+				int reg = verificaRegularLista(listas,nos,tl,0);
+				if (reg)
+				{
+
+					printf("\n\tE regular chegada %d\n", reg);
+					reg = verificaRegularLista(listas,nos,tl,1);
+					if (reg)
+						printf("\n\tE regular de saida %d\n", reg);
+				}
+				else
+				{
+					reg = verificaRegularLista(listas,nos,tl,1);
+					if (reg)
+						printf("\n\tE regular de saida%d\n", reg);
+					else
+						printf("\n\tNao e regular\n");
+				}
+			}
+			else
+			{
+				printf("\nNao e orientado\n");
+				reg = verificaRegularLista(listas,nos,tl,0);
+				if (reg)
+						printf("\n\tE regular %d\n", reg);
+					else
+						printf("\n\tNao e regular\n");
+				
+			}
+			if (!flagOrientado && flagSimples && reg && verificaCompletoLista(listas, tl))
+				printf("\nE completo => K%d\n", tl);
+			else
+				printf("\nNao e completo\n");
 			getch();
 			break;
 		}

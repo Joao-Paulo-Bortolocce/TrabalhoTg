@@ -41,6 +41,7 @@ char verificaSimplesLista(TpLista *listas[TFL],char nos[TFL][TFN],int tl) {
             }
             else
                 flag=0;
+            aux=aux->prox;
         }
     }
     return flag;
@@ -57,26 +58,27 @@ char verificaOrientadoLista(TpLista *listas[TFL],char nos[TFL][TFN],int tl) {
             busca=listas[j];
             while (busca!=NULL && stricmp(busca->rotulo,nos[i]))
                 busca=busca->prox;
-            if (busca!=NULL)
+            if (busca==NULL)
                 flag=1;
+            aux=aux->prox;
         }
     }
     return flag;
 }
 
 int verificaRegularLista(TpLista *lista[TFL],char nos[TFL][TFN], int tl, char orientado) {
-    int recepcao[TFL]={};
+    int recepcao[TFL]={},i,j;
     int regularidade=0,cont;
     TpLista *aux;
-    if (orientado) {
-        aux=TpLista[0];
+    if (!orientado) {
+        aux=lista[0];
         while (aux!=NULL) {
             aux=aux->prox;
             regularidade++;
         }
         cont=regularidade;
         for (i=1;i<tl && cont==regularidade;i++) {
-            aux=TpLista[i];
+            aux=lista[i];
             cont=0;
             while (aux!=NULL) {
                 aux=aux->prox;
@@ -128,15 +130,13 @@ void inserir(TpLista *listas[TFL], int i, char rotulo[TFN], int peso) {
 void exibeLista(TpLista *listas[TFL],char nos[TFL][TFN], int tl){
     int i,j;
     TpLista *aux;
-    printf("\t");
-    for(i=0;i<tl;i++)
-        printf("%s  -> ",nos[i]);
-    printf("\n");
+  
     for(i=0;i<tl;i++)
     {
+    	printf("\n%s  -> ",nos[i]);
         aux=listas[i];
         while (aux!=NULL) {
-            printf("%s, %d  ->  ",aux->rotulo,aux->peso);
+            printf("%s, %d  -> ",aux->rotulo,aux->peso);
             aux=aux->prox;
         }
         printf("NULL\n");
@@ -145,7 +145,7 @@ void exibeLista(TpLista *listas[TFL],char nos[TFL][TFN], int tl){
 
 int lerLista(TpLista *listas[TFL],char nos[TFL][TFN]) {
     int tl;
-    FILE*ponteiro=fopen("matriz.txt","r");
+    FILE*ponteiro=fopen("lista.txt","r");
     char carac[TFN],linha[TFL*TFL],num[TFN];
     int i,j,l,c;
     if(ponteiro!=NULL){
@@ -156,6 +156,8 @@ int lerLista(TpLista *listas[TFL],char nos[TFL][TFN]) {
                 carac[i]=linha[i];
             carac[i]='\0';
             strcpy(nos[tl],carac);
+            listas[tl]=NULL;
+            i++;
             for (;i<strlen(linha);i++) {
                 for (j=0;linha[i]!=',';i++,j++)
                     carac[j]=linha[i];
