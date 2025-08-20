@@ -130,16 +130,18 @@ void inserir(TpLista *listas[TFL], int i, char rotulo[TFN], int peso) {
 void exibeLista(TpLista *listas[TFL],char nos[TFL][TFN], int tl){
     int i,j;
     TpLista *aux;
-  
-    for(i=0;i<tl;i++)
+  	int lin,col;
+  	
+  	lin = 4, col = 28;
+    for(i=0;i<tl;i++,lin++)
     {
-    	printf("\n%s  -> ",nos[i]);
+    	gotoxy(col,lin);printf("%s  -> ",nos[i]);
         aux=listas[i];
         while (aux!=NULL) {
             printf("%s, %d  -> ",aux->rotulo,aux->peso);
             aux=aux->prox;
         }
-        printf("NULL\n");
+        printf("NULL");
     }
 }
 

@@ -10,7 +10,7 @@
 
 #include "MA.h"
 #include "MI.h"
-#include"LISTA.h"
+#include "LISTA.h"
 #include "Molduras.h"
 
 void Executar()
@@ -24,152 +24,215 @@ void Executar()
 		op = Quadro();
 		switch (op)
 		{
-		case 'A':
-			QuadroInfo();
-			textbackground(14);
-			textcolor(0);
-			gotoxy(18, 5);
-			printf("MATRIZ DE ADJACENCIA");
-
-			textbackground(14);
-			textcolor(0);
-
-			tl = lerMA(ma, nos);
-			exibeMA(ma, nos, tl);
-			flagSimples = verificaSimplesAdjacencia(ma, tl);
-			if (flagSimples)
-				printf("\n\tE simples\n");
-			else printf("\n\tNao e simples\n");
-			reg = verificaRegularAdjacencia(ma, tl);
-			if (reg)
-				printf("\n\tE regular %d\n", reg);
-			else
-				printf("\n\tNao e regular\n");
-
-			flagOrientado = verificaOrientadoAdjacencia(ma, tl) ;
-			if (flagOrientado)
-				printf("\n\tE orientado\n");
-			else
-			{
-				printf("\n\tNao e orientado\n");
-			}
-			if (flagSimples && !flagOrientado && reg && verificaCompletoAdjacencia(ma, tl))
-				printf("\n\tE completo => K%d\n", tl);
-			else
-				printf("\n\tNao e completo\n");
-
-			getch();
+			case 'A':
+				QuadroInfo();
+				textbackground(14);
+				textcolor(0);
+				gotoxy(3, 3); printf("-> MATRIZ DE ADJACENCIA <-");
+				gotoxy(3, 4); printf("RESPOSTA:");
+	
+				textbackground(14);
+				textcolor(0);
+	
+				tl = lerMA(ma, nos);
+				exibeMA(ma, nos, tl);
+				flagSimples = verificaSimplesAdjacencia(ma, tl);
+				if (flagSimples){
+					gotoxy(3, 5); 
+					printf(" - E simples");
+				}	
+				else{
+					gotoxy(3, 5);
+					printf(" - Nao e simples");	
+				} 
+				reg = verificaRegularAdjacencia(ma, tl);
+				if (reg){
+					gotoxy(3, 6);
+					printf(" - E regular %d", reg);
+				}	
+				else{
+					gotoxy(3, 6);
+					printf(" - Nao e regular");
+				}
+					
+	
+				flagOrientado = verificaOrientadoAdjacencia(ma, tl) ;
+				if (flagOrientado){
+					gotoxy(3, 7);
+					printf(" - E orientado");
+				}
+					
+				else
+				{
+					gotoxy(3, 7);
+					printf(" - Nao e orientado");
+				}
+				if (flagSimples && !flagOrientado && reg && verificaCompletoAdjacencia(ma, tl)){
+					gotoxy(3, 8);
+					printf(" - E completo => K%d", tl);
+				}
+					
+				else{
+					gotoxy(3, 8);
+					printf(" - Nao e completo");
+				}
+				getch();
 			break;
-		case 'I':
-			QuadroInfo();
-			textbackground(14);
-			textcolor(0);
-			gotoxy(18, 5);
-			printf("MATRIZ DE INCIDENCIA");
-
-			textbackground(14);
-			textcolor(0);
-
-			int tll, tlc;
-	 		lerMI(mi, nos, arestas, tll, tlc);
-			exibeMI(mi, nos, arestas, tll, tlc);
-			flagSimples=verificaSimplesMI(mi, tll, tlc);
-			if (flagSimples)
-				printf("\n\tE simples\n");
-			else
-				printf("\n\tNao e simples\n");
-
-			flagOrientado=verificaOrientadoMI(mi, tll, tlc);
-			if (flagOrientado)
-			{
-				printf("\n\tE orientado\n");
-				int reg = verificaRegularMI(mi, tl, tlc, 0);
-				if (reg)
-				{
-
-					printf("\n\tE regular chegada %d\n", reg);
-					reg = verificaRegularMI(mi, tl, tlc, 1);
-					if (reg)
-						printf("\n\tE regular de saida %d\n", reg);
+			case 'I':
+				QuadroInfo();
+				textbackground(14);
+				textcolor(0);
+				gotoxy(3, 3); printf("-> MATRIZ DE INCIDENCIA <-");
+				gotoxy(3, 4); printf("RESPOSTA:");
+	
+				textbackground(14);
+				textcolor(0);
+	
+				int tll, tlc;
+		 		lerMI(mi, nos, arestas, tll, tlc);
+				exibeMI(mi, nos, arestas, tll, tlc);
+				flagSimples=verificaSimplesMI(mi, tll, tlc);
+				if (flagSimples){
+					gotoxy(3, 5); 
+					printf(" - E simples");
 				}
-				else
+				else{
+					gotoxy(3, 5);
+					printf(" - Nao e simples");	
+				} 
+	
+				flagOrientado=verificaOrientadoMI(mi, tll, tlc);
+				if (flagOrientado)
 				{
-					reg = verificaRegularMI(mi, tl, tlc, 1);
+					gotoxy(3, 6); printf(" - E orientado");
+					
+					int reg = verificaRegularMI(mi, tl, tlc, 0);
 					if (reg)
-						printf("\n\tE regular de saida%d\n", reg);
+					{
+	
+						gotoxy(3, 7); printf(" - E regular chegada %d", reg);
+						reg = verificaRegularMI(mi, tl, tlc, 1);
+						if (reg){
+							gotoxy(3, 7);
+							printf(" - E regular de saida %d", reg);
+						}	
+					}
 					else
-						printf("\n\tNao e regular\n");
+					{
+						reg = verificaRegularMI(mi, tl, tlc, 1);
+						if (reg){
+							gotoxy(3, 7);
+							printf(" - E regular de saida%d", reg);
+						}
+							
+						else{
+							gotoxy(3, 7);
+							printf(" - Nao e regular");
+						}
+					}
 				}
-			}
-			else
-			{
-				reg = verificaRegularMI(mi, tl, tlc,0);
-				if (reg)
-					printf("\n\tE regular %d\n", reg);
 				else
-					printf("\n\tNao e regular\n");
-				printf("\nNao e orientado\n");
-			}
-			if (!flagOrientado && flagSimples && reg && verificaCompletoMI(mi, tll, tlc))
-				printf("\nE completo => K%d\n", tl);
-			else
-				printf("\nNao e completo\n");
-
-			getch();
+				{
+					reg = verificaRegularMI(mi, tl, tlc,0);
+					if (reg){
+						gotoxy(3, 7);
+						printf(" - E regular %d", reg);
+					}
+						
+					else{
+						gotoxy(3, 7);
+						printf(" - Nao e regular");
+					}
+					gotoxy(3, 6); printf(" - Nao e orientado");
+				}
+				if (!flagOrientado && flagSimples && reg && verificaCompletoMI(mi, tll, tlc)){
+					gotoxy(3, 8);
+					printf(" - E completo => K%d", tl);
+				}
+				else{
+					gotoxy(3,8);
+					printf(" - Nao e completo");
+				}
+				getch();
 			break;
-		case 'L':
-			QuadroInfo();
-			textbackground(14);
-			textcolor(0);
-			gotoxy(26, 5);
-			printf("LISTA");
-			TpLista *listas[TFL];
-			tl=lerLista(listas,nos);
-			exibeLista(listas,nos,tl);
-			
-			flagSimples=verificaSimplesLista(listas, nos, tl);
-			if (flagSimples)
-				printf("\n\tE simples\n");
-			else
-				printf("\n\tNao e simples\n");
-
-			flagOrientado=verificaOrientadoLista(listas,nos,tl);
-			if (flagOrientado)
-			{
-				printf("\n\tE orientado\n");
-				int reg = verificaRegularLista(listas,nos,tl,0);
-				if (reg)
-				{
-
-					printf("\n\tE regular chegada %d\n", reg);
-					reg = verificaRegularLista(listas,nos,tl,1);
-					if (reg)
-						printf("\n\tE regular de saida %d\n", reg);
-				}
-				else
-				{
-					reg = verificaRegularLista(listas,nos,tl,1);
-					if (reg)
-						printf("\n\tE regular de saida%d\n", reg);
-					else
-						printf("\n\tNao e regular\n");
-				}
-			}
-			else
-			{
-				printf("\nNao e orientado\n");
-				reg = verificaRegularLista(listas,nos,tl,0);
-				if (reg)
-						printf("\n\tE regular %d\n", reg);
-					else
-						printf("\n\tNao e regular\n");
+			case 'L':
+				QuadroInfo();
+				textbackground(14);
+				textcolor(0);
+				gotoxy(3, 3); printf("-> LISTA <-");
+				gotoxy(3, 4); printf("RESPOSTA:");
 				
-			}
-			if (!flagOrientado && flagSimples && reg && verificaCompletoLista(listas, tl))
-				printf("\nE completo => K%d\n", tl);
-			else
-				printf("\nNao e completo\n");
-			getch();
+				TpLista *listas[TFL];
+				tl=lerLista(listas,nos);
+				exibeLista(listas,nos,tl);
+				
+				flagSimples=verificaSimplesLista(listas, nos, tl);
+				if (flagSimples){
+					gotoxy(3, 5);
+					printf(" - E simples");
+				}
+					
+				else{
+					gotoxy(3, 5);
+					printf(" - Nao e simples");
+				}
+					
+	
+				flagOrientado=verificaOrientadoLista(listas,nos,tl);
+				if (flagOrientado)
+				{
+					gotoxy(3, 6); printf(" - E orientado");
+					int reg = verificaRegularLista(listas,nos,tl,0);
+					if (reg)
+					{
+	
+						gotoxy(3, 7);
+						printf(" - E regular chegada %d", reg);
+						reg = verificaRegularLista(listas,nos,tl,1);
+						if (reg){
+							gotoxy(3, 7);
+							printf(" - E regular de saida %d", reg);
+						}
+							
+					}
+					else
+					{
+						reg = verificaRegularLista(listas,nos,tl,1);
+						if (reg){
+							gotoxy(3, 7);
+							printf(" - E regular de saida %d", reg);
+						}
+							
+						else{
+							gotoxy(3, 7);
+							printf(" - Nao e regular");
+						}
+							
+					}
+				}
+				else
+				{
+					gotoxy(3, 6);
+					printf(" - Nao e orientado");
+					reg = verificaRegularLista(listas,nos,tl,0);
+					if (reg){
+						gotoxy(3, 7);
+						printf(" - E regular %d", reg);
+					}	
+					else{
+						gotoxy(3, 7);
+						printf(" - Nao e regular");
+					}
+				}
+				if (!flagOrientado && flagSimples && reg && verificaCompletoLista(listas, tl)){
+					gotoxy(3, 8);
+					printf(" - E completo => K%d", tl);
+				}
+				else{
+					gotoxy(3, 8);
+					printf(" - Nao e completo");
+				}
+				getch();
 			break;
 		}
 	} while (op != 27);

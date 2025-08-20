@@ -30,13 +30,13 @@ void QuadroInfo() {
     textbackground(0);
     clrscr();
     int i,j;
-    for(i = 2; i < 25; i++)
-        for(j = 2;j < 110; j++){
+    for(i = 2; i < 30; i++)
+        for(j = 2;j < 120; j++){
             textbackground(14);
             gotoxy(j,i);
             printf(" ");
         }
-    Moldura(1,1,110,25,15,7);
+    Moldura(1,1,120,30,15,7);
     i=15;
     gotoxy(2,15);
 }

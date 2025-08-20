@@ -89,14 +89,13 @@ char verificaCompletoMI(int mat[TFL][TFC*TFC], int tll, int tlc) {
 void exibeMI(int mat[TFL][TFC*TFC],char nos[TFL][TFN],char arestas[TFC*TFC][TFN], int tll, int tlc){
     int i,j;
     int lin, col, lin2, col2;
-	lin = 8, col = 17;
+	lin = 4, col = 32;
     for(i=0;i<tlc;i++, col += 6){
     	gotoxy(col,lin);
     	printf("%s",arestas[i]);
     }     
-    printf("\n");
-    lin = 9, col = 17;
-    lin2 = 9, col2 = 12;
+    lin = 5, col = 33;
+    lin2 = 5, col2 = 30;
     for(i=0;i<tll;i++, lin2++)
     {
     	gotoxy(col2,lin2);
@@ -105,7 +104,7 @@ void exibeMI(int mat[TFL][TFC*TFC],char nos[TFL][TFN],char arestas[TFC*TFC][TFN]
         	gotoxy(col,lin);
         	printf("%d",mat[i][j]);
         }
-        lin++; col = 17;
+        lin++; col = 33;
     }
     printf("\n");
 }

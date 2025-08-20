@@ -42,13 +42,12 @@ char verificaCompletoAdjacencia(int mat[TFL][TFC], int tl){
 void exibeMA(int mat[TFL][TFC],char nos[TFL][TFN], int tl){
     int i,j;
     int lin, col, lin2, col2;
-	lin = 8, col = 17;
+	lin = 4, col = 32;
     for(i=0;i<tl;i++, col += 8){
     	gotoxy(col,lin); printf("%s",nos[i]);
     }
-    printf("\n");
-    lin = 9, col = 17;
-    lin2 = 9, col2 = 12;
+    lin = 5, col = 32;
+    lin2 = 5, col2 = 30;
     for(i=0;i<tl;i++, lin2++)
     {
         gotoxy(col2,lin2);
@@ -57,7 +56,7 @@ void exibeMA(int mat[TFL][TFC],char nos[TFL][TFN], int tl){
             gotoxy(col,lin);
             printf("%d",mat[i][j]);
         }
-        lin++; col = 17;
+        lin++; col = 32;
     }
     printf("\n");
 }
