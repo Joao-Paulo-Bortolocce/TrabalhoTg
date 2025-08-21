@@ -14,7 +14,7 @@ int verificaRegularAdjacencia(int mat[TFL][TFC], int tl){
         aux=0;
         for(j=0;j<tl;j++)
             if (mat[i][j]!=0)
-                cont++;
+                aux++;
     }
     return aux==cont ? cont : 0;
 }
